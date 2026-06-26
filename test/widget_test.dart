@@ -3,11 +3,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tickr/src/app.dart';
+import 'package:tickr/src/presentation/watchlist/watchlist_controller.dart';
 
 void main() {
   testWidgets('app boots into the Watchlist tab with bottom nav',
       (WidgetTester tester) async {
-    await tester.pumpWidget(const ProviderScope(child: TickrApp()));
+    // Override the network-backed provider with empty data so the smoke test
+    // is hermetic — no real HTTP, deterministic empty state.
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          watchlistMarketsProvider.overrideWith((ref) async => []),
+        ],
+        child: const TickrApp(),
+      ),
+    );
     await tester.pumpAndSettle();
 
     // The default route is the Watchlist tab.
