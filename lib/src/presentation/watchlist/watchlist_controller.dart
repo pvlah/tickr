@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/market_providers.dart';
+import '../../data/persistence/local_store.dart';
 import '../../domain/entities/coin.dart';
 
 /// Holds the user's watchlist as an ordered list of CoinGecko ids.
@@ -23,19 +24,28 @@ class WatchlistNotifier extends Notifier<List<String>> {
   ];
 
   @override
-  List<String> build() => _seed;
+  List<String> build() {
+    // Restore the saved watchlist, or seed a sensible default on first run.
+    return ref.read(localStoreProvider).readWatchlist() ?? _seed;
+  }
 
   bool contains(String id) => state.contains(id);
 
   void add(String id) {
-    if (!state.contains(id)) state = [...state, id];
+    if (!state.contains(id)) {
+      state = [...state, id];
+      _persist();
+    }
   }
 
   void remove(String id) {
     state = state.where((e) => e != id).toList();
+    _persist();
   }
 
   void toggle(String id) => contains(id) ? remove(id) : add(id);
+
+  void _persist() => ref.read(localStoreProvider).writeWatchlist(state);
 }
 
 final watchlistProvider =

@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'src/app.dart';
+import 'src/data/persistence/local_store.dart';
 
-void main() {
-  // [ProviderScope] is Riverpod's root container: it holds the state of every
-  // provider in the app. It must sit above everything that reads a provider,
-  // so we wrap the entire app in it.
-  runApp(const ProviderScope(child: TickrApp()));
+Future<void> main() async {
+  // Required before any async work prior to runApp (plugin channels, Hive).
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Open a single Hive box for local persistence (works on web via IndexedDB
+  // and on mobile via files — no platform code needed).
+  await Hive.initFlutter();
+  final box = await Hive.openBox<String>('tickr');
+
+  runApp(
+    ProviderScope(
+      // Swap the no-op default store for the real Hive-backed one. Everything
+      // below (portfolio + watchlist Notifiers) now persists automatically.
+      overrides: [localStoreProvider.overrideWithValue(HiveStore(box))],
+      child: const TickrApp(),
+    ),
+  );
 }
