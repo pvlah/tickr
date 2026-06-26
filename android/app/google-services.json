@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "15710401121",
+    "project_id": "tickr-30dc8",
+    "storage_bucket": "tickr-30dc8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15710401121:android:da94918188af0f99027020",
+        "android_client_info": {
+          "package_name": "com.pvlah.tickr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfMTdpmWe8HP4IBfj62HtKpilHNlr1iSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

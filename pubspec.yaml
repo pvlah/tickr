@@ -41,6 +41,11 @@ dependencies:
   fl_chart: ^1.2.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  firebase_core: ^4.11.0
+  firebase_auth: ^6.5.4
+  cloud_firestore: ^6.6.0
+  firebase_analytics: ^12.4.3
+  firebase_remote_config: ^6.5.3
 
 dev_dependencies:
   flutter_test:

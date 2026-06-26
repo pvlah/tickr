@@ -13,15 +13,15 @@ class TickrApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // The router is now a provider (it reads auth for the sign-in redirect).
+    final router = ref.watch(routerProvider);
     return MaterialApp.router(
       title: 'Tickr',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      // Follow the OS setting for now. A settings toggle can override this
-      // later by swapping this for a watched provider value.
       themeMode: ThemeMode.dark,
-      routerConfig: appRouter,
+      routerConfig: router,
     );
   }
 }

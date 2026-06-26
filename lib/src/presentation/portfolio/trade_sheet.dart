@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics/analytics.dart';
 import '../../core/format/formatters.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_theme.dart';
@@ -143,6 +144,12 @@ class _TradeSheetState extends ConsumerState<TradeSheet> {
       } else {
         notifier.sell(coinId: coin.id, quantity: _quantity, price: _price);
       }
+      // Fire-and-forget analytics; never block the trade on logging.
+      ref.read(analyticsServiceProvider).logTrade(
+            side: _side == TradeSide.buy ? 'buy' : 'sell',
+            coinId: coin.id,
+            usdAmount: _usd,
+          );
       navigator.pop();
       messenger.showSnackBar(
         SnackBar(
