@@ -3,6 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tickr/src/app.dart';
+import 'package:tickr/src/domain/entities/coin.dart';
 import 'package:tickr/src/presentation/watchlist/watchlist_controller.dart';
 
 void main() {
@@ -13,7 +14,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          watchlistMarketsProvider.overrideWith((ref) async => []),
+          watchlistMarketsProvider.overrideWith((ref) => Stream.value(<Coin>[])),
         ],
         child: const TickrApp(),
       ),

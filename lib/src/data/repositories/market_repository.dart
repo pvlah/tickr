@@ -1,4 +1,5 @@
 import '../../domain/entities/coin.dart';
+import '../../domain/entities/price_point.dart';
 import '../coingecko/coin_market_dto.dart';
 import '../coingecko/coingecko_client.dart';
 
@@ -45,6 +46,20 @@ class MarketRepository {
   Future<List<Coin>> getTopMarkets({int perPage = 50}) async {
     final json = await _client.fetchTopMarkets(perPage: perPage);
     return _mapList(json);
+  }
+
+  /// Historical price series for the detail chart. Maps CoinGecko's
+  /// `[timestampMs, price]` pairs into domain [PricePoint]s.
+  Future<List<PricePoint>> getChart(String id, {int days = 7}) async {
+    final pairs = await _client.fetchMarketChart(id, days: days);
+    return pairs.whereType<List<dynamic>>().map((pair) {
+      final ms = (pair[0] as num).toInt();
+      final price = (pair[1] as num).toDouble();
+      return PricePoint(
+        time: DateTime.fromMillisecondsSinceEpoch(ms),
+        price: price,
+      );
+    }).toList();
   }
 
   List<Coin> _mapList(List<dynamic> json) => json

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/market_providers.dart';
@@ -41,19 +43,47 @@ class WatchlistNotifier extends Notifier<List<String>> {
 final watchlistProvider =
     NotifierProvider<WatchlistNotifier, List<String>>(WatchlistNotifier.new);
 
-/// Live market data for the coins currently on the watchlist.
+/// How often live prices re-poll. 20s keeps us well under CoinGecko's
+/// free-tier rate limit while still feeling "live".
+const _pollInterval = Duration(seconds: 20);
+
+/// LIVE market data for the watchlist, as a [Stream].
 ///
-/// This is a DERIVED provider: it `ref.watch`es the watchlist ids, so adding or
-/// removing a coin automatically re-runs this fetch. A [FutureProvider] models
-/// a one-shot async load and exposes an [AsyncValue] (loading / data / error)
-/// that the UI pattern-matches onto our Loading/Empty/Error views.
+/// A `Future` is ONE async value; a `Stream` is MANY over time — exactly what
+/// "prices that keep updating" needs (think RxJS Observable / Swift
+/// AsyncSequence). This provider:
+///   • emits once immediately, then every [_pollInterval] via [Timer.periodic];
+///   • re-watches [watchlistProvider], so changing the list rebuilds the stream
+///     (Riverpod disposes the old one and fires [ref.onDispose]);
+///   • cancels the timer and closes the controller on dispose — no leaked
+///     timers, no setState-after-dispose. This lifecycle hygiene is the whole
+///     point of doing it with a StreamController instead of a leaky `async*`.
 ///
-/// Day 3 upgrades this to a StreamProvider that re-polls on a timer for live
-/// ticking prices.
-final watchlistMarketsProvider = FutureProvider<List<Coin>>((ref) async {
+/// The UI sees an [AsyncValue] just like before, so the consumer barely changes
+/// — but now it re-renders on every tick.
+final watchlistMarketsProvider = StreamProvider<List<Coin>>((ref) {
   final ids = ref.watch(watchlistProvider);
   final repo = ref.watch(marketRepositoryProvider);
-  return repo.getMarkets(ids);
+
+  final controller = StreamController<List<Coin>>();
+
+  Future<void> tick() async {
+    try {
+      controller.add(await repo.getMarkets(ids, forceRefresh: true));
+    } catch (e, st) {
+      controller.addError(e, st);
+    }
+  }
+
+  tick(); // emit immediately so the user isn't staring at a spinner.
+  final timer = Timer.periodic(_pollInterval, (_) => tick());
+
+  ref.onDispose(() {
+    timer.cancel();
+    controller.close();
+  });
+
+  return controller.stream;
 });
 
 /// Top coins by market cap — powers the "add to watchlist" browser. Independent

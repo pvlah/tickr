@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../presentation/detail/coin_detail_screen.dart';
 import '../../presentation/portfolio/portfolio_screen.dart';
 import '../../presentation/watchlist/watchlist_screen.dart';
 import '../widgets/home_shell.dart';
@@ -10,6 +11,10 @@ import '../widgets/home_shell.dart';
 abstract final class Routes {
   static const watchlist = '/watchlist';
   static const portfolio = '/portfolio';
+
+  /// Detail lives UNDER the watchlist branch, so opening a coin keeps the
+  /// bottom nav visible and "back" returns to the list.
+  static String coinDetail(String id) => '/watchlist/coin/$id';
 }
 
 // Separate navigator keys: one root, one per shell branch. go_router needs
@@ -33,6 +38,15 @@ final appRouter = GoRouter(
             GoRoute(
               path: Routes.watchlist,
               builder: (context, state) => const WatchlistScreen(),
+              routes: [
+                GoRoute(
+                  // Relative path → resolves to /watchlist/coin/:id
+                  path: 'coin/:id',
+                  builder: (context, state) => CoinDetailScreen(
+                    coinId: state.pathParameters['id']!,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
