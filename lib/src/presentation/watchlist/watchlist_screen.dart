@@ -8,6 +8,7 @@ import '../../core/theme/app_theme.dart';
 import '../../core/widgets/coin_tile.dart';
 import '../../core/widgets/state_views.dart';
 import '../../domain/entities/coin.dart';
+import '../markets/live_prices.dart';
 import 'add_coins_sheet.dart';
 import 'watchlist_controller.dart';
 
@@ -32,11 +33,11 @@ class WatchlistScreen extends ConsumerWidget {
         ],
       ),
       body: RefreshIndicator(
-        // Pull-to-refresh: invalidate the provider so it rebuilds the stream
-        // and re-emits immediately.
+        // Pull-to-refresh: rebuild the shared price stream so it re-polls and
+        // re-emits immediately. The derived watchlist updates with it.
         onRefresh: () async {
-          ref.invalidate(watchlistMarketsProvider);
-          await ref.read(watchlistMarketsProvider.future);
+          ref.invalidate(livePricesProvider);
+          await ref.read(livePricesProvider.future);
         },
         child: _body(context, ref, marketsAsync),
       ),
@@ -64,7 +65,7 @@ class WatchlistScreen extends ConsumerWidget {
     return _errorScroll(
       ErrorView(
         message: '${async.error}',
-        onRetry: () => ref.invalidate(watchlistMarketsProvider),
+        onRetry: () => ref.invalidate(livePricesProvider),
       ),
     );
   }

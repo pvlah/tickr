@@ -4,17 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tickr/src/app.dart';
 import 'package:tickr/src/domain/entities/coin.dart';
-import 'package:tickr/src/presentation/watchlist/watchlist_controller.dart';
+import 'package:tickr/src/presentation/markets/live_prices.dart';
 
 void main() {
   testWidgets('app boots into the Watchlist tab with bottom nav',
       (WidgetTester tester) async {
-    // Override the network-backed provider with empty data so the smoke test
-    // is hermetic — no real HTTP, deterministic empty state.
+    // Override the shared price stream with empty data so the smoke test is
+    // hermetic — no real HTTP. Both the watchlist and portfolio derive from it.
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          watchlistMarketsProvider.overrideWith((ref) => Stream.value(<Coin>[])),
+          livePricesProvider
+              .overrideWith((ref) => Stream.value(<String, Coin>{})),
         ],
         child: const TickrApp(),
       ),

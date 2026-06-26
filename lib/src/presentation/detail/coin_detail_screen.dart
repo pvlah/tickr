@@ -8,6 +8,7 @@ import '../../core/theme/app_typography.dart';
 import '../../core/widgets/change_badge.dart';
 import '../../core/widgets/state_views.dart';
 import '../../domain/entities/coin.dart';
+import '../portfolio/trade_sheet.dart';
 import 'coin_detail_controller.dart';
 import 'widgets/price_chart.dart';
 
@@ -25,6 +26,14 @@ class CoinDetailScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(coinAsync.asData?.value.name ?? coinId),
       ),
+      floatingActionButton: coinAsync.asData == null
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: () =>
+                  TradeSheet.show(context, coin: coinAsync.asData!.value),
+              icon: const Icon(Icons.swap_horiz),
+              label: const Text('Trade'),
+            ),
       body: coinAsync.when(
         loading: () => const LoadingView(),
         error: (e, _) => ErrorView(
