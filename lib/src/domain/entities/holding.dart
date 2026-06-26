@@ -30,30 +30,30 @@ class Holding {
   String get displaySymbol => symbol.toUpperCase();
 
   Holding copyWith({double? quantity, double? avgCost}) => Holding(
-        coinId: coinId,
-        symbol: symbol,
-        name: name,
-        imageUrl: imageUrl,
-        quantity: quantity ?? this.quantity,
-        avgCost: avgCost ?? this.avgCost,
-      );
+    coinId: coinId,
+    symbol: symbol,
+    name: name,
+    imageUrl: imageUrl,
+    quantity: quantity ?? this.quantity,
+    avgCost: avgCost ?? this.avgCost,
+  );
 
   // --- JSON (for Hive persistence on Day 4) ---
   Map<String, dynamic> toJson() => {
-        'coinId': coinId,
-        'symbol': symbol,
-        'name': name,
-        'imageUrl': imageUrl,
-        'quantity': quantity,
-        'avgCost': avgCost,
-      };
+    'coinId': coinId,
+    'symbol': symbol,
+    'name': name,
+    'imageUrl': imageUrl,
+    'quantity': quantity,
+    'avgCost': avgCost,
+  };
 
   factory Holding.fromJson(Map<String, dynamic> json) => Holding(
-        coinId: json['coinId'] as String,
-        symbol: json['symbol'] as String? ?? '',
-        name: json['name'] as String? ?? '',
-        imageUrl: json['imageUrl'] as String? ?? '',
-        quantity: (json['quantity'] as num).toDouble(),
-        avgCost: (json['avgCost'] as num).toDouble(),
-      );
+    coinId: json['coinId'] as String,
+    symbol: json['symbol'] as String? ?? '',
+    name: json['name'] as String? ?? '',
+    imageUrl: json['imageUrl'] as String? ?? '',
+    quantity: (json['quantity'] as num).toDouble(),
+    avgCost: (json['avgCost'] as num).toDouble(),
+  );
 }

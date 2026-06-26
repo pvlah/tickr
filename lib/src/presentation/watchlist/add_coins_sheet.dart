@@ -36,7 +36,11 @@ class AddCoinsSheet extends ConsumerWidget {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(
-              AppSpacing.md, 0, AppSpacing.md, AppSpacing.sm),
+            AppSpacing.md,
+            0,
+            AppSpacing.md,
+            AppSpacing.sm,
+          ),
           child: Text('Add coins', style: context.text.titleLarge),
         ),
         Expanded(

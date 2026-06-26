@@ -10,12 +10,7 @@ import 'change_badge.dart';
 /// Reused by the watchlist and the "add coins" browser, with [trailing]
 /// letting each context swap in its own action (chevron vs. add/remove toggle).
 class CoinTile extends StatelessWidget {
-  const CoinTile({
-    super.key,
-    required this.coin,
-    this.onTap,
-    this.trailing,
-  });
+  const CoinTile({super.key, required this.coin, this.onTap, this.trailing});
 
   final Coin coin;
   final VoidCallback? onTap;
@@ -30,18 +25,20 @@ class CoinTile extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       leading: _CoinLogo(url: coin.imageUrl, symbol: coin.displaySymbol),
-      title: Text(coin.name,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.text.titleMedium),
+      title: Text(
+        coin.name,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: context.text.titleMedium,
+      ),
       subtitle: Text(coin.displaySymbol, style: context.text.bodySmall),
-      trailing: trailing ??
+      trailing:
+          trailing ??
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(Formatters.usd(coin.price),
-                  style: context.text.titleMedium),
+              Text(Formatters.usd(coin.price), style: context.text.titleMedium),
               const SizedBox(height: AppSpacing.xs),
               ChangeBadge(changePercent: coin.changePercent24h),
             ],

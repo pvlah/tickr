@@ -5,18 +5,18 @@ import 'package:tickr/src/domain/portfolio_valuation.dart';
 
 /// Test helper: a Coin with only the fields the portfolio cares about.
 Coin _coin(String id, {String symbol = 'btc', double price = 0}) => Coin(
-      id: id,
-      symbol: symbol,
-      name: id,
-      imageUrl: '',
-      price: price,
-      changePercent24h: 0,
-      marketCap: 0,
-      marketCapRank: 0,
-      high24h: 0,
-      low24h: 0,
-      totalVolume: 0,
-    );
+  id: id,
+  symbol: symbol,
+  name: id,
+  imageUrl: '',
+  price: price,
+  changePercent24h: 0,
+  marketCap: 0,
+  marketCapRank: 0,
+  high24h: 0,
+  low24h: 0,
+  totalVolume: 0,
+);
 
 void main() {
   final btc = _coin('bitcoin', symbol: 'btc');
@@ -101,7 +101,8 @@ void main() {
 
     test('rejects selling a coin not held', () {
       expect(
-        () => Portfolio.initial().sell(coinId: 'dogecoin', quantity: 1, price: 1),
+        () =>
+            Portfolio.initial().sell(coinId: 'dogecoin', quantity: 1, price: 1),
         throwsA(isA<InsufficientHoldingsException>()),
       );
     });
@@ -150,10 +151,10 @@ void main() {
       final p = Portfolio.initial()
           .buy(coin: btc, quantity: 1, price: 100) // cost 100
           .buy(coin: eth, quantity: 1, price: 50); // cost 50
-      final v = PortfolioValuation.from(
-        p,
-        const {'bitcoin': 130, 'ethereum': 40},
-      );
+      final v = PortfolioValuation.from(p, const {
+        'bitcoin': 130,
+        'ethereum': 40,
+      });
       expect(v.totalCost, 150);
       expect(v.holdingsValue, 170); // 130 + 40
       expect(v.totalUnrealizedPnl, 20); // +30 - 10

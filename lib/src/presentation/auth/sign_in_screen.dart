@@ -49,8 +49,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     if (s.contains('invalid-credential') || s.contains('wrong-password')) {
       return 'Incorrect email or password.';
     }
-    if (s.contains('email-already-in-use')) return 'That email is already registered.';
-    if (s.contains('weak-password')) return 'Password should be at least 6 characters.';
+    if (s.contains('email-already-in-use')) {
+      return 'That email is already registered.';
+    }
+    if (s.contains('weak-password')) {
+      return 'Password should be at least 6 characters.';
+    }
     return 'Something went wrong. Please try again.';
   }
 
@@ -70,14 +74,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               children: [
                 Icon(Icons.show_chart, size: 56, color: context.colors.primary),
                 const SizedBox(height: AppSpacing.md),
-                Text('Tickr',
-                    textAlign: TextAlign.center,
-                    style: context.text.headlineMedium),
+                Text(
+                  'Tickr',
+                  textAlign: TextAlign.center,
+                  style: context.text.headlineMedium,
+                ),
                 Text(
                   'Paper-trade crypto, risk-free.',
                   textAlign: TextAlign.center,
-                  style: context.text.bodyMedium
-                      ?.copyWith(color: context.colors.onSurfaceVariant),
+                  style: context.text.bodyMedium?.copyWith(
+                    color: context.colors.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 TextField(
@@ -96,40 +103,60 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 ),
                 if (_error != null) ...[
                   const SizedBox(height: AppSpacing.sm),
-                  Text(_error!,
-                      style: context.text.bodySmall
-                          ?.copyWith(color: context.colors.error)),
+                  Text(
+                    _error!,
+                    style: context.text.bodySmall?.copyWith(
+                      color: context.colors.error,
+                    ),
+                  ),
                 ],
                 const SizedBox(height: AppSpacing.md),
                 FilledButton(
                   onPressed: _busy
                       ? null
-                      : () => _run(() => _register
-                          ? auth.registerWithEmail(_email.text.trim(), _password.text)
-                          : auth.signInWithEmail(_email.text.trim(), _password.text)),
+                      : () => _run(
+                          () => _register
+                              ? auth.registerWithEmail(
+                                  _email.text.trim(),
+                                  _password.text,
+                                )
+                              : auth.signInWithEmail(
+                                  _email.text.trim(),
+                                  _password.text,
+                                ),
+                        ),
                   child: _busy
                       ? const SizedBox(
                           height: 18,
                           width: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2))
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
                       : Text(_register ? 'Create account' : 'Sign in'),
                 ),
                 TextButton(
-                  onPressed: _busy ? null : () => setState(() => _register = !_register),
-                  child: Text(_register
-                      ? 'Have an account? Sign in'
-                      : 'New here? Create an account'),
+                  onPressed: _busy
+                      ? null
+                      : () => setState(() => _register = !_register),
+                  child: Text(
+                    _register
+                        ? 'Have an account? Sign in'
+                        : 'New here? Create an account',
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                  child: Row(children: [
-                    Expanded(child: Divider()),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                      child: Text('or'),
-                    ),
-                    Expanded(child: Divider()),
-                  ]),
+                  child: Row(
+                    children: [
+                      Expanded(child: Divider()),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppSpacing.sm,
+                        ),
+                        child: Text('or'),
+                      ),
+                      Expanded(child: Divider()),
+                    ],
+                  ),
                 ),
                 OutlinedButton.icon(
                   onPressed: _busy ? null : () => _run(auth.signInAnonymously),

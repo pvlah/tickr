@@ -20,12 +20,20 @@ class PortfolioNotifier extends Notifier<Portfolio> {
     return ref.read(localStoreProvider).readPortfolio() ?? Portfolio.initial();
   }
 
-  void buy({required Coin coin, required double quantity, required double price}) {
+  void buy({
+    required Coin coin,
+    required double quantity,
+    required double price,
+  }) {
     state = state.buy(coin: coin, quantity: quantity, price: price);
     _persist();
   }
 
-  void sell({required String coinId, required double quantity, required double price}) {
+  void sell({
+    required String coinId,
+    required double quantity,
+    required double price,
+  }) {
     state = state.sell(coinId: coinId, quantity: quantity, price: price);
     _persist();
   }
@@ -38,5 +46,6 @@ class PortfolioNotifier extends Notifier<Portfolio> {
   void _persist() => ref.read(localStoreProvider).writePortfolio(state);
 }
 
-final portfolioProvider =
-    NotifierProvider<PortfolioNotifier, Portfolio>(PortfolioNotifier.new);
+final portfolioProvider = NotifierProvider<PortfolioNotifier, Portfolio>(
+  PortfolioNotifier.new,
+);

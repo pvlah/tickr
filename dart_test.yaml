@@ -1,0 +1,6 @@
+# Declares custom test tags. `golden` marks pixel-snapshot tests, which are
+# platform-sensitive — CI excludes them with `flutter test --exclude-tags golden`
+# while they're verified locally.
+tags:
+  golden:
+    description: Golden / pixel-snapshot tests (platform-sensitive)

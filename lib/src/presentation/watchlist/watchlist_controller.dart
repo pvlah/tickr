@@ -48,8 +48,9 @@ class WatchlistNotifier extends Notifier<List<String>> {
   void _persist() => ref.read(localStoreProvider).writeWatchlist(state);
 }
 
-final watchlistProvider =
-    NotifierProvider<WatchlistNotifier, List<String>>(WatchlistNotifier.new);
+final watchlistProvider = NotifierProvider<WatchlistNotifier, List<String>>(
+  WatchlistNotifier.new,
+);
 
 // The live watchlist price feed now lives in `markets/live_prices.dart`
 // (`watchlistMarketsProvider`), derived from the shared `livePricesProvider`

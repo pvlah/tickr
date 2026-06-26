@@ -1,0 +1,38 @@
+name: CI
+
+# Runs the quality gate on every push and PR: static analysis, tests, and a
+# web build. Mirrors what we run locally so "green on CI" means shippable.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Pinned to match local dev so analyzer/test behavior is reproducible.
+          flutter-version: 3.44.4
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test (excludes platform-sensitive golden tests)
+        run: flutter test --exclude-tags golden
+
+      - name: Build web
+        run: flutter build web --release

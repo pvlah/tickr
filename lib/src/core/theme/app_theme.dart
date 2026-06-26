@@ -47,19 +47,21 @@ abstract final class AppTheme {
     final isDark = brightness == Brightness.dark;
 
     // ColorScheme.fromSeed generates a full, WCAG-aware palette from one color.
-    final scheme = ColorScheme.fromSeed(
-      seedColor: AppColors.seed,
-      brightness: brightness,
-    ).copyWith(
-      surface: isDark ? AppColors.darkSurface : AppColors.lightSurface,
-    );
+    final scheme =
+        ColorScheme.fromSeed(
+          seedColor: AppColors.seed,
+          brightness: brightness,
+        ).copyWith(
+          surface: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+        );
 
     final base = ThemeData(brightness: brightness, useMaterial3: true);
 
     return base.copyWith(
       colorScheme: scheme,
-      scaffoldBackgroundColor:
-          isDark ? AppColors.darkBackground : AppColors.lightBackground,
+      scaffoldBackgroundColor: isDark
+          ? AppColors.darkBackground
+          : AppColors.lightBackground,
       textTheme: AppTypography.textTheme(base.textTheme),
       extensions: const [_market],
       cardTheme: CardThemeData(
@@ -71,17 +73,20 @@ abstract final class AppTheme {
         margin: EdgeInsets.zero,
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor:
-            isDark ? AppColors.darkBackground : AppColors.lightBackground,
+        backgroundColor: isDark
+            ? AppColors.darkBackground
+            : AppColors.lightBackground,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: AppTypography.textTheme(base.textTheme)
-            .headlineMedium
-            ?.copyWith(color: scheme.onSurface),
+        titleTextStyle: AppTypography.textTheme(
+          base.textTheme,
+        ).headlineMedium?.copyWith(color: scheme.onSurface),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark ? AppColors.darkSurfaceVariant : AppColors.lightSurface,
+        fillColor: isDark
+            ? AppColors.darkSurfaceVariant
+            : AppColors.lightSurface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadii.md),
           borderSide: BorderSide.none,

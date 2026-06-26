@@ -28,12 +28,17 @@ class ChangeBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(up ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-              size: 16, color: color),
+          Icon(
+            up ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+            size: 16,
+            color: color,
+          ),
           Text(
             Formatters.percent(changePercent),
-            style: context.text.labelMedium
-                ?.copyWith(color: color, fontWeight: FontWeight.w700),
+            style: context.text.labelMedium?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),

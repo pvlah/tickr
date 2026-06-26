@@ -52,8 +52,7 @@ class PortfolioValuation {
   }
 
   /// Market value of all holdings (excludes cash).
-  double get holdingsValue =>
-      holdings.fold(0, (sum, h) => sum + h.marketValue);
+  double get holdingsValue => holdings.fold(0, (sum, h) => sum + h.marketValue);
 
   /// Cash + holdings — the portfolio's net worth.
   double get totalValue => cash + holdingsValue;
@@ -70,8 +69,7 @@ class PortfolioValuation {
   /// Overall return vs the $100k starting balance (cash gains included).
   double get totalReturn => totalValue - Portfolio.startingCash;
 
-  double get totalReturnPercent =>
-      totalReturn / Portfolio.startingCash * 100;
+  double get totalReturnPercent => totalReturn / Portfolio.startingCash * 100;
 
   bool get isUp => totalReturn >= 0;
 }

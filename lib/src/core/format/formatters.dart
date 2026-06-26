@@ -5,13 +5,17 @@ import 'package:intl/intl.dart';
 /// (the thousands separators) for free.
 abstract final class Formatters {
   static final NumberFormat _usd = NumberFormat.currency(symbol: '\$');
-  static final NumberFormat _compact =
-      NumberFormat.compactCurrency(symbol: '\$');
+  static final NumberFormat _compact = NumberFormat.compactCurrency(
+    symbol: '\$',
+  );
 
   /// `$60,102.00`. Crypto can be sub-cent, so show more precision when tiny.
   static String usd(double value) {
     if (value > 0 && value < 1) {
-      return NumberFormat.currency(symbol: '\$', decimalDigits: 6).format(value);
+      return NumberFormat.currency(
+        symbol: '\$',
+        decimalDigits: 6,
+      ).format(value);
     }
     return _usd.format(value);
   }

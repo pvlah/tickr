@@ -55,29 +55,29 @@ class CoinMarketDto {
 
   /// Map the wire model to the clean domain entity.
   Coin toEntity() => Coin(
-        id: id,
-        symbol: symbol,
-        name: name,
-        imageUrl: image,
-        price: currentPrice,
-        changePercent24h: priceChangePercentage24h,
-        marketCap: marketCap,
-        marketCapRank: marketCapRank,
-        high24h: high24h,
-        low24h: low24h,
-        totalVolume: totalVolume,
-      );
+    id: id,
+    symbol: symbol,
+    name: name,
+    imageUrl: image,
+    price: currentPrice,
+    changePercent24h: priceChangePercentage24h,
+    marketCap: marketCap,
+    marketCapRank: marketCapRank,
+    high24h: high24h,
+    low24h: low24h,
+    totalVolume: totalVolume,
+  );
 
   // JSON numbers can arrive as int or double (or null). Normalize to double.
   static double _toDouble(Object? v) => switch (v) {
-        final int i => i.toDouble(),
-        final double d => d,
-        _ => 0,
-      };
+    final int i => i.toDouble(),
+    final double d => d,
+    _ => 0,
+  };
 
   static int _toInt(Object? v) => switch (v) {
-        final int i => i,
-        final num n => n.toInt(),
-        _ => 0,
-      };
+    final int i => i,
+    final num n => n.toInt(),
+    _ => 0,
+  };
 }

@@ -23,9 +23,7 @@ class CoinDetailScreen extends ConsumerWidget {
     final coinAsync = ref.watch(coinDetailProvider(coinId));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(coinAsync.asData?.value.name ?? coinId),
-      ),
+      appBar: AppBar(title: Text(coinAsync.asData?.value.name ?? coinId)),
       floatingActionButton: coinAsync.asData == null
           ? null
           : FloatingActionButton.extended(
@@ -80,8 +78,9 @@ class _PriceHeader extends StatelessWidget {
           children: [
             Text(
               Formatters.usd(coin.price),
-              style: context.text.headlineMedium
-                  ?.merge(AppTypography.priceFigures),
+              style: context.text.headlineMedium?.merge(
+                AppTypography.priceFigures,
+              ),
             ),
             const SizedBox(width: AppSpacing.md),
             ChangeBadge(changePercent: coin.changePercent24h),
@@ -108,8 +107,7 @@ class _ChartSection extends ConsumerWidget {
             Text('7-day price', style: context.text.labelLarge),
             const SizedBox(height: AppSpacing.md),
             chartAsync.when(
-              loading: () =>
-                  const SizedBox(height: 220, child: LoadingView()),
+              loading: () => const SizedBox(height: 220, child: LoadingView()),
               error: (e, _) => SizedBox(
                 height: 220,
                 child: ErrorView(
@@ -149,8 +147,9 @@ class _StatsGrid extends StatelessWidget {
               title: Text(stat.$1, style: context.text.bodyMedium),
               trailing: Text(
                 stat.$2,
-                style: context.text.titleSmall
-                    ?.merge(AppTypography.priceFigures),
+                style: context.text.titleSmall?.merge(
+                  AppTypography.priceFigures,
+                ),
               ),
             ),
           ],

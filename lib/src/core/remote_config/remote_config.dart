@@ -36,13 +36,13 @@ final watchlistLayoutProvider = Provider<WatchlistLayout>((ref) {
 /// the first fetch) and pulls the latest values. Called once from `main()`.
 Future<FirebaseRemoteConfig> initRemoteConfig() async {
   final rc = FirebaseRemoteConfig.instance;
-  await rc.setConfigSettings(RemoteConfigSettings(
-    fetchTimeout: const Duration(seconds: 10),
-    minimumFetchInterval: const Duration(hours: 1),
-  ));
-  await rc.setDefaults(const {
-    RemoteConfigKeys.watchlistLayout: 'list',
-  });
+  await rc.setConfigSettings(
+    RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(hours: 1),
+    ),
+  );
+  await rc.setDefaults(const {RemoteConfigKeys.watchlistLayout: 'list'});
   try {
     await rc.fetchAndActivate();
   } catch (_) {

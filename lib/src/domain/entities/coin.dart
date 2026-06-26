@@ -67,16 +67,16 @@ class Coin {
 
   @override
   int get hashCode => Object.hash(
-        id,
-        symbol,
-        name,
-        imageUrl,
-        price,
-        changePercent24h,
-        marketCap,
-        marketCapRank,
-        high24h,
-        low24h,
-        totalVolume,
-      );
+    id,
+    symbol,
+    name,
+    imageUrl,
+    price,
+    changePercent24h,
+    marketCap,
+    marketCapRank,
+    high24h,
+    low24h,
+    totalVolume,
+  );
 }

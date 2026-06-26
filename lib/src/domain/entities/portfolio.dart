@@ -3,7 +3,10 @@ import 'holding.dart';
 
 /// Raised when a buy would cost more cash than is available.
 class InsufficientFundsException implements Exception {
-  const InsufficientFundsException({required this.required, required this.available});
+  const InsufficientFundsException({
+    required this.required,
+    required this.available,
+  });
   final double required;
   final double available;
   @override
@@ -14,7 +17,10 @@ class InsufficientFundsException implements Exception {
 
 /// Raised when a sell exceeds the quantity held.
 class InsufficientHoldingsException implements Exception {
-  const InsufficientHoldingsException({required this.requested, required this.held});
+  const InsufficientHoldingsException({
+    required this.requested,
+    required this.held,
+  });
   final double requested;
   final double held;
   @override
@@ -62,8 +68,7 @@ class Portfolio {
 
     final existing = holdings[coin.id];
     final newQuantity = (existing?.quantity ?? 0) + quantity;
-    final newAvgCost =
-        ((existing?.costBasis ?? 0) + cost) / newQuantity;
+    final newAvgCost = ((existing?.costBasis ?? 0) + cost) / newQuantity;
 
     final updated = Holding(
       coinId: coin.id,
@@ -120,9 +125,9 @@ class Portfolio {
 
   // --- JSON (for Hive persistence) ---
   Map<String, dynamic> toJson() => {
-        'cash': cash,
-        'holdings': holdings.map((k, v) => MapEntry(k, v.toJson())),
-      };
+    'cash': cash,
+    'holdings': holdings.map((k, v) => MapEntry(k, v.toJson())),
+  };
 
   factory Portfolio.fromJson(Map<String, dynamic> json) {
     final rawHoldings = (json['holdings'] as Map?) ?? const {};

@@ -63,8 +63,9 @@ class _BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = context.colors;
-    final returnColor =
-        valuation.isUp ? context.market.up : context.market.down;
+    final returnColor = valuation.isUp
+        ? context.market.up
+        : context.market.down;
     return Card(
       child: Container(
         width: double.infinity,
@@ -80,9 +81,12 @@ class _BalanceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Total balance',
-                style: context.text.labelLarge
-                    ?.copyWith(color: scheme.onPrimary.withValues(alpha: 0.8))),
+            Text(
+              'Total balance',
+              style: context.text.labelLarge?.copyWith(
+                color: scheme.onPrimary.withValues(alpha: 0.8),
+              ),
+            ),
             const SizedBox(height: AppSpacing.sm),
             Text(
               Formatters.usd(valuation.totalValue),
@@ -131,7 +135,11 @@ class _BalanceCard extends StatelessWidget {
 }
 
 class _MiniStat extends StatelessWidget {
-  const _MiniStat({required this.label, required this.value, required this.color});
+  const _MiniStat({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
   final String label;
   final String value;
   final Color color;
@@ -141,13 +149,19 @@ class _MiniStat extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label,
-            style: context.text.labelSmall
-                ?.copyWith(color: color.withValues(alpha: 0.8))),
+        Text(
+          label,
+          style: context.text.labelSmall?.copyWith(
+            color: color.withValues(alpha: 0.8),
+          ),
+        ),
         const SizedBox(height: 2),
-        Text(value,
-            style: context.text.titleSmall
-                ?.merge(AppTypography.priceFigures.copyWith(color: color))),
+        Text(
+          value,
+          style: context.text.titleSmall?.merge(
+            AppTypography.priceFigures.copyWith(color: color),
+          ),
+        ),
       ],
     );
   }
@@ -166,14 +180,20 @@ class _HoldingTile extends ConsumerWidget {
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.xs,
+        ),
         leading: CircleAvatar(
           radius: 18,
           backgroundColor: context.colors.surfaceContainerHighest,
           child: ClipOval(
-            child: Image.network(h.imageUrl, width: 36, height: 36,
-                fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => Text(h.displaySymbol.characters.first)),
+            child: Image.network(
+              h.imageUrl,
+              width: 36,
+              height: 36,
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => Text(h.displaySymbol.characters.first),
+            ),
           ),
         ),
         title: Text(h.name, style: context.text.titleMedium),
@@ -185,14 +205,18 @@ class _HoldingTile extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(Formatters.usd(valuation.marketValue),
-                style: context.text.titleMedium),
+            Text(
+              Formatters.usd(valuation.marketValue),
+              style: context.text.titleMedium,
+            ),
             const SizedBox(height: 2),
             Text(
               '${Formatters.usd(valuation.unrealizedPnl)} '
               '(${Formatters.percent(valuation.unrealizedPnlPercent)})',
-              style: context.text.labelMedium
-                  ?.copyWith(color: color, fontWeight: FontWeight.w700),
+              style: context.text.labelMedium?.copyWith(
+                color: color,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ],
         ),
@@ -208,18 +232,18 @@ class _HoldingTile extends ConsumerWidget {
   }
 
   Coin _coinFromHolding(HoldingValuation v) => Coin(
-        id: v.holding.coinId,
-        symbol: v.holding.symbol,
-        name: v.holding.name,
-        imageUrl: v.holding.imageUrl,
-        price: v.price,
-        changePercent24h: 0,
-        marketCap: 0,
-        marketCapRank: 0,
-        high24h: 0,
-        low24h: 0,
-        totalVolume: 0,
-      );
+    id: v.holding.coinId,
+    symbol: v.holding.symbol,
+    name: v.holding.name,
+    imageUrl: v.holding.imageUrl,
+    price: v.price,
+    changePercent24h: 0,
+    marketCap: 0,
+    marketCapRank: 0,
+    high24h: 0,
+    low24h: 0,
+    totalVolume: 0,
+  );
 }
 
 class _EmptyHoldings extends StatelessWidget {
@@ -230,8 +254,9 @@ class _EmptyHoldings extends StatelessWidget {
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Text(
           'No holdings yet. Open a coin and tap Trade to start paper trading.',
-          style: context.text.bodyMedium
-              ?.copyWith(color: context.colors.onSurfaceVariant),
+          style: context.text.bodyMedium?.copyWith(
+            color: context.colors.onSurfaceVariant,
+          ),
         ),
       ),
     );

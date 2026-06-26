@@ -58,7 +58,10 @@ final watchlistMarketsProvider = Provider<AsyncValue<List<Coin>>>((ref) {
   final ids = ref.watch(watchlistProvider);
   final pricesAsync = ref.watch(livePricesProvider);
   return pricesAsync.whenData(
-    (prices) => [for (final id in ids) if (prices[id] != null) prices[id]!],
+    (prices) => [
+      for (final id in ids)
+        if (prices[id] != null) prices[id]!,
+    ],
   );
 });
 
@@ -71,8 +74,7 @@ final watchlistMarketsProvider = Provider<AsyncValue<List<Coin>>>((ref) {
 final portfolioValuationProvider = Provider<PortfolioValuation>((ref) {
   final portfolio = ref.watch(portfolioProvider);
   final prices = ref.watch(livePricesProvider).asData?.value ?? const {};
-  return PortfolioValuation.from(
-    portfolio,
-    {for (final e in prices.entries) e.key: e.value.price},
-  );
+  return PortfolioValuation.from(portfolio, {
+    for (final e in prices.entries) e.key: e.value.price,
+  });
 });

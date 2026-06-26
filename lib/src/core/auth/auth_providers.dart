@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The FirebaseAuth singleton, exposed as a provider so tests can override it.
-final firebaseAuthProvider =
-    Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
+final firebaseAuthProvider = Provider<FirebaseAuth>(
+  (ref) => FirebaseAuth.instance,
+);
 
 /// Streams the current signed-in [User] (or null). This is the reactive source
 /// of truth the router's redirect uses to gate the app behind sign-in.

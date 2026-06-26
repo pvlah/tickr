@@ -75,9 +75,8 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     // Relative path → resolves to /watchlist/coin/:id
                     path: 'coin/:id',
-                    builder: (context, state) => CoinDetailScreen(
-                      coinId: state.pathParameters['id']!,
-                    ),
+                    builder: (context, state) =>
+                        CoinDetailScreen(coinId: state.pathParameters['id']!),
                   ),
                 ],
               ),

@@ -15,15 +15,16 @@ class RateLimitException implements Exception {
 /// "dumb" (returns `dynamic` JSON, no business logic) makes it trivial to mock.
 class CoinGeckoClient {
   CoinGeckoClient({Dio? dio})
-      : _dio = dio ??
-            Dio(
-              BaseOptions(
-                baseUrl: 'https://api.coingecko.com/api/v3',
-                connectTimeout: const Duration(seconds: 10),
-                receiveTimeout: const Duration(seconds: 10),
-                headers: {'accept': 'application/json'},
-              ),
-            );
+    : _dio =
+          dio ??
+          Dio(
+            BaseOptions(
+              baseUrl: 'https://api.coingecko.com/api/v3',
+              connectTimeout: const Duration(seconds: 10),
+              receiveTimeout: const Duration(seconds: 10),
+              headers: {'accept': 'application/json'},
+            ),
+          );
 
   final Dio _dio;
 
@@ -73,10 +74,14 @@ class CoinGeckoClient {
   }
 
   Future<Map<String, dynamic>> _getMap(
-      String path, Map<String, dynamic> query) async {
+    String path,
+    Map<String, dynamic> query,
+  ) async {
     try {
-      final res =
-          await _dio.get<Map<String, dynamic>>(path, queryParameters: query);
+      final res = await _dio.get<Map<String, dynamic>>(
+        path,
+        queryParameters: query,
+      );
       return res.data ?? const {};
     } on DioException catch (e) {
       throw _mapError(e);

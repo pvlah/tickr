@@ -11,8 +11,9 @@ import 'repositories/market_repository.dart';
 /// a fake and the whole graph below it uses the fake — no mocking frameworks.
 
 /// The raw HTTP client. One instance for the app.
-final coinGeckoClientProvider =
-    Provider<CoinGeckoClient>((ref) => CoinGeckoClient());
+final coinGeckoClientProvider = Provider<CoinGeckoClient>(
+  (ref) => CoinGeckoClient(),
+);
 
 /// The repository, built from the client. `ref.watch` here means: if the
 /// client provider were ever replaced, the repository rebuilds with it.

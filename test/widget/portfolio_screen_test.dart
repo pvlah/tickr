@@ -8,18 +8,18 @@ import 'package:tickr/src/presentation/portfolio/portfolio_controller.dart';
 import 'package:tickr/src/presentation/portfolio/portfolio_screen.dart';
 
 Coin _btc(double price) => Coin(
-      id: 'bitcoin',
-      symbol: 'btc',
-      name: 'Bitcoin',
-      imageUrl: '',
-      price: price,
-      changePercent24h: 0,
-      marketCap: 0,
-      marketCapRank: 0,
-      high24h: 0,
-      low24h: 0,
-      totalVolume: 0,
-    );
+  id: 'bitcoin',
+  symbol: 'btc',
+  name: 'Bitcoin',
+  imageUrl: '',
+  price: price,
+  changePercent24h: 0,
+  marketCap: 0,
+  marketCapRank: 0,
+  high24h: 0,
+  low24h: 0,
+  totalVolume: 0,
+);
 
 void main() {
   testWidgets('portfolio reflects a buy and shows live P&L', (tester) async {
@@ -41,10 +41,7 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp(
-          theme: AppTheme.dark,
-          home: const PortfolioScreen(),
-        ),
+        child: MaterialApp(theme: AppTheme.dark, home: const PortfolioScreen()),
       ),
     );
     await tester.pump(); // let the stream emit

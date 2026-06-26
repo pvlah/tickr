@@ -19,7 +19,11 @@ enum TradeSide { buy, sell }
 /// portfolio reactively to validate against cash/holdings and calls the
 /// Notifier on confirm.
 class TradeSheet extends ConsumerStatefulWidget {
-  const TradeSheet({super.key, required this.coin, this.initialSide = TradeSide.buy});
+  const TradeSheet({
+    super.key,
+    required this.coin,
+    this.initialSide = TradeSide.buy,
+  });
 
   final Coin coin;
   final TradeSide initialSide;
@@ -77,8 +81,10 @@ class _TradeSheetState extends ConsumerState<TradeSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('${coin.name} • ${Formatters.usd(_price)}',
-              style: context.text.titleMedium),
+          Text(
+            '${coin.name} • ${Formatters.usd(_price)}',
+            style: context.text.titleMedium,
+          ),
           const SizedBox(height: AppSpacing.md),
           SegmentedButton<TradeSide>(
             segments: const [
@@ -92,8 +98,7 @@ class _TradeSheetState extends ConsumerState<TradeSheet> {
           TextField(
             controller: _amountController,
             autofocus: true,
-            keyboardType:
-                const TextInputType.numberWithOptions(decimal: true),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
             ],
@@ -104,7 +109,7 @@ class _TradeSheetState extends ConsumerState<TradeSheet> {
               helperText: _side == TradeSide.buy
                   ? 'Cash available: ${Formatters.usd(portfolio.cash)}'
                   : 'You hold: ${held.toStringAsFixed(6)} ${coin.displaySymbol}'
-                      ' (${Formatters.usd(maxUsd)})',
+                        ' (${Formatters.usd(maxUsd)})',
               errorText: overLimit ? 'Exceeds available' : null,
             ),
           ),
@@ -113,16 +118,18 @@ class _TradeSheetState extends ConsumerState<TradeSheet> {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: maxUsd > 0
-                  ? () => setState(() => _amountController.text =
-                      maxUsd.toStringAsFixed(2))
+                  ? () => setState(
+                      () => _amountController.text = maxUsd.toStringAsFixed(2),
+                    )
                   : null,
               child: const Text('Max'),
             ),
           ),
           Text(
             '≈ ${_quantity.toStringAsFixed(6)} ${coin.displaySymbol}',
-            style: context.text.bodyMedium
-                ?.copyWith(color: context.colors.onSurfaceVariant),
+            style: context.text.bodyMedium?.copyWith(
+              color: context.colors.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           FilledButton(
@@ -145,7 +152,9 @@ class _TradeSheetState extends ConsumerState<TradeSheet> {
         notifier.sell(coinId: coin.id, quantity: _quantity, price: _price);
       }
       // Fire-and-forget analytics; never block the trade on logging.
-      ref.read(analyticsServiceProvider).logTrade(
+      ref
+          .read(analyticsServiceProvider)
+          .logTrade(
             side: _side == TradeSide.buy ? 'buy' : 'sell',
             coinId: coin.id,
             usdAmount: _usd,
