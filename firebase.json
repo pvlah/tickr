@@ -1,1 +1,41 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"tickr-30dc8","appId":"1:15710401121:android:da94918188af0f99027020","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"tickr-30dc8","appId":"1:15710401121:ios:00829ed80acd13b4027020","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"tickr-30dc8","configurations":{"android":"1:15710401121:android:da94918188af0f99027020","ios":"1:15710401121:ios:00829ed80acd13b4027020","web":"1:15710401121:web:4b3cca00b828a1bd027020"}}}}}}
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "tickr-30dc8",
+          "appId": "1:15710401121:android:da94918188af0f99027020",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "tickr-30dc8",
+          "appId": "1:15710401121:ios:00829ed80acd13b4027020",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tickr-30dc8",
+          "configurations": {
+            "android": "1:15710401121:android:da94918188af0f99027020",
+            "ios": "1:15710401121:ios:00829ed80acd13b4027020",
+            "web": "1:15710401121:web:4b3cca00b828a1bd027020"
+          }
+        }
+      }
+    }
+  }
+}
