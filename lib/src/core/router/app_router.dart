@@ -44,7 +44,12 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: _rootKey,
-    initialLocation: Routes.watchlist,
+    // Initial route is overridable at build time (used to capture screenshots
+    // of specific screens); defaults to the watchlist.
+    initialLocation: const String.fromEnvironment(
+      'TICKR_ROUTE',
+      defaultValue: Routes.watchlist,
+    ),
     refreshListenable: refresh,
     observers: observers,
     redirect: (context, state) {

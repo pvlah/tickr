@@ -108,11 +108,31 @@ class _ChartSection extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md),
             chartAsync.when(
               loading: () => const SizedBox(height: 220, child: LoadingView()),
+              // Compact error that fits the chart's fixed height (the full
+              // ErrorView is taller than 220px and would overflow here).
               error: (e, _) => SizedBox(
                 height: 220,
-                child: ErrorView(
-                  message: '$e',
-                  onRetry: () => ref.invalidate(coinChartProvider(coinId)),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.show_chart,
+                        size: 32,
+                        color: context.colors.outline,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        "Couldn't load chart",
+                        style: context.text.bodyMedium,
+                      ),
+                      TextButton(
+                        onPressed: () =>
+                            ref.invalidate(coinChartProvider(coinId)),
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               data: (points) => PriceChart(points: points),
